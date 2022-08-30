@@ -1,1 +1,1 @@
-web: gunicorn --workers2 app:app --timeout 200 --max-requests 1200 --log-file -
+web: gunicorn --workers 2 app:app --preload --timeout 200 --max-requests 1200 --log-file -
