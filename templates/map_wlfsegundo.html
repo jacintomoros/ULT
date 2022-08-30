@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<head>    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_ff6c11fc03903cb4c3bfaef34d601537 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.2/leaflet.draw.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.2/leaflet.draw.css"/>
+    
+            <style>
+                #demo {
+                    position: absolute;
+                    top: 5px;
+                    right: 10px;
+                    z-index: 999;
+                    background: white;
+                    color: black;
+                    padding: 6px;
+                    border-radius: 4px;
+                    font-family: 'Helvetica Neue';
+                    /* cursor: pointer; */
+                    font-size: 12px;
+                    text-decoration: none;
+                    top: 90px;
+                    opacity: 1;
+                }
+                #ola {
+                    position: absolute;
+                    /* top: 5px;
+                    right: 10px; */
+                    z-index: 999;
+                    background: white;
+                    color: black;
+                    padding: 6px;
+                    border-radius: 4px;
+                    font-family: 'Helvetica Neue';
+                    /* cursor: pointer; */
+                    font-size: 12px;
+                    text-decoration: none;
+                    top: 90px;
+                    opacity: 1;
+                }
+            </style>
+        
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.fullscreen/1.4.2/Control.FullScreen.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.fullscreen/1.4.2/Control.FullScreen.min.css"/>
+</head>
+<body>
+    <form action = "/result_wfltwo" method="POST">
+        <!-- <button id="myButton" name="button" onclick="sendDataToBacked()">Send</button> -->
+        <div id="ola"></div>
+        <input type="text" id="demo" name="demo" >
+        <!-- <div class="gif">
+            <div class="image">
+                <input type="image" src="{{url_for('static', filename='images/PLAY.gif')}}" alt="Submit" value="Click">
+            </div>
+        </div> -->
+    </form>    
+            <div class="folium-map" id="map_ff6c11fc03903cb4c3bfaef34d601537" ></div>
+        
+    <!-- <a href='#' id='export'>Export</a> -->
+</body>
+<script>    
+    
+            var map_ff6c11fc03903cb4c3bfaef34d601537 = L.map(
+                "map_ff6c11fc03903cb4c3bfaef34d601537",
+                {
+                    center: [41.397238077221054, 2.194508346024573],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 15,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var options = {
+              position: "topleft",
+              draw: {"circle": false, "circlemarker": false, "polyline": true, "rectangle": false},
+              edit: {"poly": {"allowIntersection": false}},
+            }
+            // FeatureGroup is to store editable layers.
+            var drawnItems = new L.featureGroup().addTo(
+                map_ff6c11fc03903cb4c3bfaef34d601537
+            );
+            options.edit.featureGroup = drawnItems;
+            var draw_control_f97acd2354feb95d11a905ffc9aadbbc = new L.Control.Draw(
+                options
+            ).addTo( map_ff6c11fc03903cb4c3bfaef34d601537 );
+            map_ff6c11fc03903cb4c3bfaef34d601537.on(L.Draw.Event.CREATED, function(e) {
+                var layer = e.layer,
+                    type = e.layerType;
+                var coords = JSON.stringify(layer.toGeoJSON());
+                layer.on('click', function() {
+                    alert(coords);
+                    console.log(coords);
+                });
+                drawnItems.addLayer(layer);
+
+                str = JSON.stringify(coords)
+                str = str.substring(0, str.length - 5);
+                slug = str.split('[[').pop();
+                slug += "@";
+
+                var theDiv = document.getElementById("ola");
+                var content = document.createTextNode(slug);
+                theDiv.appendChild(content);
+                document.getElementById("demo").value=document.getElementById("ola").innerHTML;
+
+
+             });
+            map_ff6c11fc03903cb4c3bfaef34d601537.on('draw:created', function(e) {
+                drawnItems.addLayer(e.layer);
+            });
+            
+            // document.getElementById('export').onclick = function(e) {
+            //     var data = drawnItems.toGeoJSON();
+            //     var convertedData = 'text/json;charset=utf-8,'
+            //         + encodeURIComponent(JSON.stringify(data));
+            //     document.getElementById('export').setAttribute(
+            //         'href', 'data:' + convertedData
+            //     );
+            //     document.getElementById('export').setAttribute(
+            //         'download', "my_data.geojson"
+            //     );
+            // }
+            
+        
+    
+            L.Control.geocoder(
+                {"collapsed": false, "defaultMarkGeocode": true, "position": "topright"}
+            ).on('markgeocode', function(e) {
+                map_ff6c11fc03903cb4c3bfaef34d601537.setView(e.geocode.center, 11);
+            }).addTo(map_ff6c11fc03903cb4c3bfaef34d601537);
+
+        
+    
+            L.control.fullscreen(
+                {"forceSeparateButton": true, "position": "topleft", "title": "Expand me", "titleCancel": "Exit me"}
+            ).addTo(map_ff6c11fc03903cb4c3bfaef34d601537);
+        
+    
+            var tile_layer_90d67e6500cc0a953aaf005c3b09f40a = L.tileLayer(
+                "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"http://cartodb.com/attributions\"\u003eCartoDB\u003c/a\u003e, CartoDB \u003ca href =\"http://cartodb.com/attributions\"\u003eattributions\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_ff6c11fc03903cb4c3bfaef34d601537);
+        
+</script>
