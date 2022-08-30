@@ -1,1 +1,1 @@
-web: gunicorn --workers=4 app:app --timeout 20000 --log-file -
+web: gunicorn --workers2 app:app --timeout 200 --max-requests 1200 --log-file -
