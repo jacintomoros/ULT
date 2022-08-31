@@ -154,7 +154,7 @@ def result_wlfcero():
 
     poly = request.form['demo']
     # proj_streets, location = test_wlfcero.getEdges(poly)
-    location, a = test_wlfcero.getEdges(poly)
+    # location, a = test_wlfcero.getEdges(poly)
 
     # folium_map = proj_streets.explore(
     #     column ='travel_time',

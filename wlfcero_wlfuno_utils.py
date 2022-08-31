@@ -1,3 +1,28 @@
+import geopandas as gpd
+from shapely.geometry import Polygon
+
+def get_polygon(poly):
+    final_b = poly.replace("[", "")
+    final_b = final_b.replace("]", "")
+    final_b = [j.split() for j in final_b.split(',') if j!='']
+    final_b = [item for sublist in final_b for item in sublist]
+    final_b = [float(i) for i in final_b]
+    lat_point_list = final_b[0::2]
+    lon_point_list = final_b[1::2]
+
+    x = lon_point_list
+    y = lat_point_list
+    point_central = lat1,lng1 =sum(x)/len(x), sum(y)/len(y) 
+
+    a = zip(lat_point_list, lon_point_list)
+    polygon_geom = Polygon(a)
+    crs = 'epsg:3857'
+    polygon = gpd.GeoDataFrame(index=[0], crs=crs, geometry=[polygon_geom])
+    polygon= polygon.iloc[0]['geometry']
+    return point_central, crs, polygon
+
+
+######################################
 # NEIGHBOURING EDGES
 # Divide list in x num of chunks of unequal size. Like GH partition list command
 def chunks(lst, chunks):

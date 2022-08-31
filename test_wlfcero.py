@@ -17,23 +17,8 @@ import wlfcero_wlfuno_utils as wlfc
 #@markdown Function for HOPS
 def getEdges(poly):
 
-    final_b = poly.replace("[", "")
-    final_b = final_b.replace("]", "")
-    final_b = [j.split() for j in final_b.split(',') if j!='']
-    final_b = [item for sublist in final_b for item in sublist]
-    final_b = [float(i) for i in final_b]
-    lat_point_list = final_b[0::2]
-    lon_point_list = final_b[1::2]
-
-    x = lon_point_list
-    y = lat_point_list
-    point_central = lat1,lng1 =sum(x)/len(x), sum(y)/len(y) 
-
-    a = zip(lat_point_list, lon_point_list)
-    polygon_geom = Polygon(a)
-    crs = 'epsg:3857'
-    polygon = gpd.GeoDataFrame(index=[0], crs=crs, geometry=[polygon_geom])
-    polygon= polygon.iloc[0]['geometry'] 
+    point_central, crs, polygon = wlfc.get_polygon(poly)
+     
     G = ox.graph_from_polygon(polygon, network_type = 'drive',simplify=False)
     gdf_proj_streets_good = ox.graph_to_gdfs(G, nodes=False)
 
