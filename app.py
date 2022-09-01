@@ -33,7 +33,7 @@ def loadingPage():
     return render_template('loading.html', filename=poly)
 
 @app.route('/wlfcero', methods=['GET', 'POST'])
-async def wlfcero():
+def wlfcero():
     # map_draw = folium.Map(location=(41.397238077221054, 2.194508346024573),zoom_start=15,tiles=None,)
     # draw = plugins.Draw(
     #         export=True,
@@ -132,7 +132,7 @@ def wlfsegundo():
 
 
 @app.route("/result_wlfcero/<filename>", methods=['GET'])
-def result_wlfcero(filename):
+async def result_wlfcero(filename):
     # parameters = {
     #     'name',
     #     "travel_time",
@@ -164,7 +164,7 @@ def result_wlfcero(filename):
 
     # poly = request.form['demo']
     # proj_streets, location = test_wlfcero.getEdges(poly)
-    location, a = test_wlfcero.getEdges(filename)
+    location, a = await test_wlfcero.getEdges(filename)
 
     # folium_map = proj_streets.explore(
     #     column ='travel_time',
