@@ -13,6 +13,19 @@ import threading
 import random
 from datetime import datetime, timedelta
 
+import geopandas as gpd
+import osmnx as ox
+import momepy
+from collections import Counter
+import pandas as pd
+import json
+import requests
+from shapely.geometry import Polygon
+from shapely.geometry import Point as pit
+from datetime import datetime, timedelta
+
+import wlfcero_wlfuno_utils as wlfc
+
 
 app = Flask(__name__)
 # hops = hs.Hops(app)
@@ -195,65 +208,85 @@ def result_wlfcero():
 
     poly = request.form['demo']
     # proj_streets, location = test_wlfcero.getEdges(poly)
-    location, a = test_wlfcero.getEdges(poly)
+    # location, a = test_wlfcero.getEdges(poly)
 
-    # folium_map = proj_streets.explore(
-    #     column ='travel_time',
-    #     tooltip_kwds=dict(labels=True),
-    #     tooltip=parameters,
-    #     popup=parameters,
-    #     k=10,
-    #     name="graph",
-    #     tiles=None,
-    #     style_kwds=dict(weight=5),
-    #     )
-    folium_map = folium.Map(location=location,tiles="cartodbpositron", zoom_start=15)
+    final_b = poly.replace("[", "")
+    final_b = final_b.replace("]", "")
+    final_b = [j.split() for j in final_b.split(',') if j!='']
+    final_b = [item for sublist in final_b for item in sublist]
+    final_b = [float(i) for i in final_b]
+    lat_point_list = final_b[0::2]
+    lon_point_list = final_b[1::2]
+
+    x = lon_point_list
+    y = lat_point_list
+    point_central = lat1,lng1 =sum(x)/len(x), sum(y)/len(y) 
+
+    a = zip(lat_point_list, lon_point_list)
+    polygon_geom = Polygon(a)
+    crs = 'epsg:3857'
+    polygon = gpd.GeoDataFrame(index=[0], crs=crs, geometry=[polygon_geom])
+    polygon= polygon.iloc[0]['geometry'] 
+    G = ox.graph_from_polygon(polygon, network_type = 'drive',simplify=False)
+    gdf_proj_streets_good = ox.graph_to_gdfs(G, nodes=False)
+
+    folium_map = gdf_proj_streets_good.explore(
+        # column ='travel_time',
+        # tooltip_kwds=dict(labels=True),
+        # tooltip=parameters,
+        # popup=parameters,
+        # k=10,
+        # name="graph",
+        # tiles=None,
+        # style_kwds=dict(weight=5),
+        )
+#     folium_map = folium.Map(location=location,tiles="cartodbpositron", zoom_start=15)
     
-    minimap = plugins.MiniMap()
-    folium_map.add_child(minimap)
+#     minimap = plugins.MiniMap()
+#     folium_map.add_child(minimap)
 
-    # folium.TileLayer('cartodbpositron',opacity=0.6).add_to(folium_map)
-    folium.LayerControl().add_to(folium_map)
+#     # folium.TileLayer('cartodbpositron',opacity=0.6).add_to(folium_map)
+#     folium.LayerControl().add_to(folium_map)
 
-#
-    lines = a
+# #
+#     lines = a
 
-    features = [
-        {
-            "type": "Feature",
-            "geometry": {
-                "type": "LineString",
-                "coordinates": line["coordinates"],
-            },
-            "properties": {
-                "times": line["dates"],
-                # "popup": line["popup"],
-                "style": {
-                    "color": line["color"],
-                    # "weight": line["weight"] if "weight" in line else 5,
-                },
-            },
-        }
-        for line in lines
+#     features = [
+#         {
+#             "type": "Feature",
+#             "geometry": {
+#                 "type": "LineString",
+#                 "coordinates": line["coordinates"],
+#             },
+#             "properties": {
+#                 "times": line["dates"],
+#                 # "popup": line["popup"],
+#                 "style": {
+#                     "color": line["color"],
+#                     # "weight": line["weight"] if "weight" in line else 5,
+#                 },
+#             },
+#         }
+#         for line in lines
         
-    ]
+#     ]
 
-    plugins.TimestampedGeoJson(
-        {
-            "type": "FeatureCollection",
-            "features": features,
-        },
-        period="PT1S",
-        add_last_point=False,
-        auto_play=False,
-        loop=False,
-        max_speed=10,
-        loop_button=True,
-        date_options="ss",
-        # 'YYYY-MM-DD HH:mm:ss',
-        time_slider_drag_update=True,
-        duration="P2M",
-    ).add_to(folium_map)
+#     plugins.TimestampedGeoJson(
+#         {
+#             "type": "FeatureCollection",
+#             "features": features,
+#         },
+#         period="PT1S",
+#         add_last_point=False,
+#         auto_play=False,
+#         loop=False,
+#         max_speed=10,
+#         loop_button=True,
+#         date_options="ss",
+#         # 'YYYY-MM-DD HH:mm:ss',
+#         time_slider_drag_update=True,
+#         duration="P2M",
+#     ).add_to(folium_map)
     
 #
 
