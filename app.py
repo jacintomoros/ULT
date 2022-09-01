@@ -7,6 +7,8 @@ import test_wlftwo
 import folium
 from folium import plugins
 
+import threading
+
 #
 import random
 from datetime import datetime, timedelta
@@ -18,6 +20,10 @@ app = Flask(__name__)
 @app.route("/", methods=['GET', 'POST'])
 def home():
     return render_template("home_index.html")
+
+@app.route("/login", methods=['GET', 'POST'])
+def login():
+    return render_template("login_index.html")
 
 # @app.route('/wlfcero', methods=['GET', 'POST'])
 # def wlfcero():
@@ -119,7 +125,6 @@ def wlfsegundo():
 # @app.route('/wlfsegundo', methods=['GET', 'POST'])
 # def wlfsegundo():
 #     return render_template("home_index.html")
-
 
 @app.route("/result_wlfcero", methods=['GET', 'POST'])
 def result_wlfcero():

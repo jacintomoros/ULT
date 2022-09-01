@@ -4,7 +4,7 @@ body {
     background-image: url('../images/login_page.jpg');
     background-repeat: no-repeat;
     background-attachment: fixed;
-    background-size:contain;
+    background-size:100% 100%;
     background-position: 0%;
 
   }

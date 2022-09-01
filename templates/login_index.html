@@ -15,45 +15,10 @@
         <link rel="stylesheet" href="{{url_for('static',filename='css/login_style.css')}}">
 
     </head>
-    <body>     
-        <div class="title">SELECT MAP</div>
-        <form action = "/result" method ="post">
-            <div class="parameters">
-                <div class="maps">
-                    <div>
-                        <a href="https://www.google.com/maps/@40.3807179,-3.7451455,13z" target="_blank"><img src="{{url_for('static', filename='images/loc.png')}}" alt="b" title="Get LAT/LONG location." ></a>
-                    </div>
-                    <div class="titl">
-                        <label for="location">Enter Get LAT/Long by Google Maps:</label>
-                    </div>
-                    <div>
-                        <input type="text" id="location" name="location" size="25" placeholder="Enter Location...">
-                    </div>
-                    <div class="example">
-                        <label for="location_example">ex.: 40.40858362975408, -3.6706531744641926</label>
-                    </div>
-                </div>
-                <div class="distance">
-                    <div>
-                        <img src="{{url_for('static', filename='images/81631.png')}}" alt="c" title="Set length side square">
-                    </div>
-                    <div class="titl">
-                        <label for="distance">Set side distance</label>
-                    </div>
-                    <div>
-                        <input type="text" id="distance" name="distance" size="25" placeholder="Enter side distance square...">
-                    </div>
-                    <div class="example">
-                        <label for="distacne_example">ex.: 500 </label>
-                    </div>
-                </div>
-            </div>
-            <div class="gif">
-                <div class="image">
-                    <input type="image" src="{{url_for('static', filename='images/PLAY.gif')}}" alt="Submit" value="Click">
-                </div>
-            </div>
-        </form>                
+    <body>
+        <div class="hover">
+            <a href="/wlfsegundo"><img src="{{url_for('static', filename='images/login.png')}}"></a>
+        </div>       
             
         <!-- <embed src="../music/videoplayback.mp3" loop="true" autostart="true" width="2" height="0"> -->
         
