@@ -162,7 +162,7 @@ def wlfsegundo():
 # def wlfsegundo():
 #     return render_template("home_index.html")
 
-@app.route("/result_wlfcero", methods=['POST'])
+@app.route("/result_wlfcero", methods=['GET', 'POST'])
 def result_wlfcero():
     # parameters = {
     #     'name',
