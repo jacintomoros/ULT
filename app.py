@@ -33,7 +33,7 @@ def loadingPage():
     return render_template('loading.html', filename=poly)
 
 @app.route('/wlfcero', methods=['GET', 'POST'])
-def wlfcero():
+async def wlfcero():
     # map_draw = folium.Map(location=(41.397238077221054, 2.194508346024573),zoom_start=15,tiles=None,)
     # draw = plugins.Draw(
     #         export=True,
