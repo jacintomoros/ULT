@@ -17,41 +17,41 @@ from datetime import datetime, timedelta
 app = Flask(__name__)
 # hops = hs.Hops(app)
 
-app.index_string = '''<!DOCTYPE html>
-<html>
-<head>
-<title>My app title</title>
-<link rel="manifest" href="./assets/manifest.json" />
-{%metas%}
-{%favicon%}
-{%css%}
-</head>
-<script type="module">
-   import 'https://cdn.jsdelivr.net/npm/@pwabuilder/pwaupdate';
-   const el = document.createElement('pwa-update');
-   document.body.appendChild(el);
-</script>
-<body>
-<script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', ()=> {
-      navigator
-      .serviceWorker
-      .register('./assets/pwabuilder-sw.js')
-      .then(()=>console.log("Ready."))
-      .catch(()=>console.log("Err..."));
-    });
-  }
-</script>
-{%app_entry%}
-<footer>
-{%config%}
-{%scripts%}
-{%renderer%}
-</footer>
-</body>
-</html>
-'''
+# app.index_string = '''<!DOCTYPE html>
+# <html>
+# <head>
+# <title>My app title</title>
+# <link rel="manifest" href="./assets/manifest.json" />
+# {%metas%}
+# {%favicon%}
+# {%css%}
+# </head>
+# <script type="module">
+#    import 'https://cdn.jsdelivr.net/npm/@pwabuilder/pwaupdate';
+#    const el = document.createElement('pwa-update');
+#    document.body.appendChild(el);
+# </script>
+# <body>
+# <script>
+#   if ('serviceWorker' in navigator) {
+#     window.addEventListener('load', ()=> {
+#       navigator
+#       .serviceWorker
+#       .register('./assets/pwabuilder-sw.js')
+#       .then(()=>console.log("Ready."))
+#       .catch(()=>console.log("Err..."));
+#     });
+#   }
+# </script>
+# {%app_entry%}
+# <footer>
+# {%config%}
+# {%scripts%}
+# {%renderer%}
+# </footer>
+# </body>
+# </html>
+# '''
 
 @app.route("/", methods=['GET', 'POST'])
 def home():
@@ -162,7 +162,7 @@ def wlfsegundo():
 # def wlfsegundo():
 #     return render_template("home_index.html")
 
-@app.route("/result_wlfcero", methods=['GET', 'POST'])
+@app.route("/result_wlfcero", methods=['POST'])
 def result_wlfcero():
     # parameters = {
     #     'name',
