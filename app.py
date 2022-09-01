@@ -27,7 +27,7 @@ def login():
 # def wlfcero():
 #     return render_template("home_index.html")
 
-@app.route('/loadingPage', methods=['GET', 'POST'])
+@app.route('/loadingPage', methods=['POST'])
 def loadingPage():
     poly = request.form['demo']
     return render_template('loading.html', filename=poly)
