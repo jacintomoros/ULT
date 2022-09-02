@@ -61,8 +61,8 @@
 </head>
 <body>
     <form action = "/result_wlfcero">
-        <!-- <button id="myButton" name="button" onclick="sendDataToBacked()">Send</button> -->
-        <input type="text" id="demo" name="demo" >
+        <button id="myButton" name="button" >Send</button>
+        <!-- <input type="text" id="demo" name="demo" > -->
         
         <!-- <div class="gif">
             <div class="image">
@@ -114,11 +114,11 @@
                 });
                 drawnItems.addLayer(layer);
 
-                str = JSON.stringify(coords)
-                str = str.substring(0, str.length - 5);
-                slug = str.split('[[').pop();
-                str = str.substring(0, str.length - 1);
-                document.getElementById("demo").value=slug;
+                // str = JSON.stringify(coords)
+                // str = str.substring(0, str.length - 5);
+                // slug = str.split('[[').pop();
+                // str = str.substring(0, str.length - 1);
+                // document.getElementById("demo").value=slug;
 
              });
             map_0156867e6b7aea9c0c15eec3d0d0b52c.on('draw:created', function(e) {
