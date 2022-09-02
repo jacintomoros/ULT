@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<head>
+    <!-- FAVICON -->
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{url_for('static',filename='favicon/apple-touch-icon.png')}}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{url_for('static',filename='favicon/favicon-32x32.png')}}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{url_for('static',filename='favicon/favicon-16x16.png')}}">
+    <link rel="manifest" href="{{url_for('static',filename='favicon/site.webmanifest')}}">
+    
+    <!-- TÍTULO -->
+    <title>Urban Life Tactics | WFL.00</title>
+
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_0156867e6b7aea9c0c15eec3d0d0b52c {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.2/leaflet.draw.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.2/leaflet.draw.css"/>
+    
+            <style>
+                @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+                .left {
+                    position: absolute;
+                    font-family:'Bebas Neue' ;
+                    font-size: 100px;
+                    top: 50%;
+                    left: 450px;
+                    transform: translate(-50%, -50%);
+                    z-index: 999;
+                    /* color: white;
+                    -webkit-text-stroke: 2px rgb(0, 0, 0); */
+                    }
+                #demo {
+                    position: absolute;
+                    top: 5px;
+                    right: 10px;
+                    z-index: 999;
+                    background: white;
+                    color: black;
+                    padding: 6px;
+                    border-radius: 4px;
+                    font-family: 'Helvetica Neue';
+                    /* cursor: pointer; */
+                    font-size: 12px;
+                    text-decoration: none;
+                    top: 90px;
+                    opacity:0;
+                }
+
+                #credits{
+                    position: absolute;
+                    z-index: 999;
+                    bottom: 5px;
+                    width: 300px;
+                }
+                #enter{
+                    position: absolute;
+                    z-index: 999;
+                    bottom: 75px;
+                    width: 150px;
+                    right:75px;
+                    overflow: hidden;
+                    -webkit-transform: scale(1);
+                    transform: scale(1);
+                    -webkit-transition: .3s ease-in-out;
+                    transition: .3s ease-in-out;
+                    filter:grayscale();
+                }
+                #enter:hover {
+                    -webkit-transform: scale(2);
+                    transform: scale(1.2);
+                    filter: none;
+                    /* position: relative; */
+                    /* z-index: 2; */
+                    
+                    /* margin-bottom: 10px; */
+                }
+
+            </style>
+    
+    
+    <a><img id='credits' src="{{url_for('static', filename='images/credits.png')}}"></a>
+    <div class="left">Select Area</div>
+
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.fullscreen/1.4.2/Control.FullScreen.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.fullscreen/1.4.2/Control.FullScreen.min.css"/>
+</head>
+<body>
+    <form action = "/result_wlfcero" method="POST">
+        <!-- <button id="myButton" name="button" onclick="sendDataToBacked()">Send</button> -->
+        <input type="text" id="demo" name="demo">
+        <input type="image" id="enter" src="{{url_for('static', filename='images/enter.png')}}">
+        
+        <!-- <div class="gif">
+            <div class="image">
+                <input type="image" src="{{url_for('static', filename='images/PLAY.gif')}}" alt="Submit" value="Click">
+            </div>
+        </div> -->
+    </form>    
+            <div class="folium-map" id="map_0156867e6b7aea9c0c15eec3d0d0b52c" ></div>
+        
+    <!-- <a href='#' id='export'>Export</a> -->
+</body>
+<script>    
+    
+            var map_0156867e6b7aea9c0c15eec3d0d0b52c = L.map(
+                "map_0156867e6b7aea9c0c15eec3d0d0b52c",
+                {
+                    center: [41.397238077221054, 2.194508346024573],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 15,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var options = {
+              position: "topleft",
+              draw: {"circle": false, "circlemarker": false, "polyline": true, "rectangle": false},
+              edit: {"poly": {"allowIntersection": false}},
+            }
+            // FeatureGroup is to store editable layers.
+            var drawnItems = new L.featureGroup().addTo(
+                map_0156867e6b7aea9c0c15eec3d0d0b52c
+            );
+            options.edit.featureGroup = drawnItems;
+            var draw_control_65098ded27c76b10717d4f07646482d8 = new L.Control.Draw(
+                options
+            ).addTo( map_0156867e6b7aea9c0c15eec3d0d0b52c );
+            map_0156867e6b7aea9c0c15eec3d0d0b52c.on(L.Draw.Event.CREATED, function(e) {
+                var layer = e.layer,
+                    type = e.layerType;
+                var coords = JSON.stringify(layer.toGeoJSON());
+                layer.on('click', function() {
+                    alert(coords);
+                    console.log(coords);
+                });
+                drawnItems.addLayer(layer);
+
+                str = JSON.stringify(coords)
+                str = str.substring(0, str.length - 5);
+                slug = str.split('[[').pop();
+                str = str.substring(0, str.length - 1);
+                document.getElementById("demo").value=slug;
+
+             });
+            map_0156867e6b7aea9c0c15eec3d0d0b52c.on('draw:created', function(e) {
+                drawnItems.addLayer(e.layer);
+            });
+            
+            // document.getElementById('export').onclick = function(e) {
+            //     var data = drawnItems.toGeoJSON();
+            //     var convertedData = 'text/json;charset=utf-8,'
+            //         + encodeURIComponent(JSON.stringify(data));
+            //     document.getElementById('export').setAttribute(
+            //         'href', 'data:' + convertedData
+            //     );
+            //     document.getElementById('export').setAttribute(
+            //         'download', "my_data.geojson"
+            //     );
+            // }
+            
+        
+    
+            L.Control.geocoder(
+                {"collapsed": false, "defaultMarkGeocode": true, "position": "topright"}
+            ).on('markgeocode', function(e) {
+                map_0156867e6b7aea9c0c15eec3d0d0b52c.setView(e.geocode.center, 11);
+            }).addTo(map_0156867e6b7aea9c0c15eec3d0d0b52c);
+
+        
+    
+            L.control.fullscreen(
+                {"forceSeparateButton": true, "position": "topleft", "title": "Expand me", "titleCancel": "Exit me"}
+            ).addTo(map_0156867e6b7aea9c0c15eec3d0d0b52c);
+        
+    
+            var tile_layer_652674c97fa88f4c5b09d09e59f8423e = L.tileLayer(
+                "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"http://cartodb.com/attributions\"\u003eCartoDB\u003c/a\u003e, CartoDB \u003ca href =\"http://cartodb.com/attributions\"\u003eattributions\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_0156867e6b7aea9c0c15eec3d0d0b52c);
+        
+</script>

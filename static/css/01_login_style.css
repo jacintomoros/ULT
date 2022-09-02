@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
+body {
+    background-image: url('../images/login_page.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size:auto;
+    background-position: 0%;
+  }
+
+.hover {
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
+  margin: 200px;
+}
+
+.hover img{
+  width: 500px;
+  height: auto;
+  /* padding: 10px; */
+  
+}
+
+#wlf0_gif{
+  /* scale: 0.2; */
+  filter:grayscale();
+  
+  overflow: hidden;
+  -webkit-transform: scale(1);
+	transform: scale(1);
+	-webkit-transition: .3s ease-in-out;
+	transition: .3s ease-in-out;
+  border-style: solid;
+}
+#wlf0_gif:hover {
+	-webkit-transform: scale(2);
+	transform: scale(1.2);
+  filter: none;
+  /* margin-bottom: 10px; */
+  position: relative;
+  z-index: 2;
+}
+
+#wlf1_gif{
+  /* scale: 0.2; */
+  filter:grayscale();
+  
+  overflow: hidden;
+  -webkit-transform: scale(1);
+	transform: scale(1);
+	-webkit-transition: .3s ease-in-out;
+	transition: .3s ease-in-out;
+  border-style: solid;
+}
+#wlf1_gif:hover {
+	-webkit-transform: scale(2);
+	transform: scale(1.2);
+  filter: none;
+  /* margin-bottom: 10px; */
+  position: relative;
+  z-index: 2;
+}
+
+#wlf2_gif{
+  /* scale: 0.2; */
+  filter:grayscale();
+  
+  overflow: hidden;
+  -webkit-transform: scale(1);
+	transform: scale(1);
+	-webkit-transition: .3s ease-in-out;
+	transition: .3s ease-in-out;
+  border-style: solid;
+}
+#wlf2_gif:hover {
+	-webkit-transform: scale(2);
+	transform: scale(1.2);
+  filter: none;
+  position: relative;
+  z-index: 2;
+  
+  /* margin-bottom: 10px; */
+}
+
+.choose {
+  position: absolute;
+  font-family:'Bebas Neue' ;
+  font-size: 80px;
+  top: 15%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  /* color: white;
+  -webkit-text-stroke: 2px rgb(0, 0, 0); */
+}
+
+.left {
+  position: absolute;
+  font-family:'Bebas Neue' ;
+  font-size: 100px;
+  top: 50%;
+  left: 450px;
+  transform: translate(-50%, -50%);
+  /* color: white;
+  -webkit-text-stroke: 2px rgb(0, 0, 0); */
+}
+
+.centered {
+  position: absolute;
+  font-family:'Bebas Neue' ;
+  font-size: 100px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.right {
+  position: absolute;
+  font-family:'Bebas Neue' ;
+  font-size: 100px;
+  top: 50%;
+  right: 250px;
+  transform: translate(-50%, -50%);
+}

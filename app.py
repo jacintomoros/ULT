@@ -1,6 +1,4 @@
-from asyncio import threads
 from flask import Flask, render_template, request
-# import ghhops_server as hs
 
 import test_wlfcero
 import test_wflone
@@ -8,23 +6,15 @@ import test_wlftwo
 import folium
 from folium import plugins
 
-import urllib.parse
-#
-import random
-from datetime import datetime, timedelta
-
-
 app = Flask(__name__)
-# hops = hs.Hops(app)
-
 
 @app.route("/", methods=['GET', 'POST'])
 def home():
-    return render_template("home_index.html")
+    return render_template("00_home.html")
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
-    return render_template("login_index.html")
+    return render_template("01_login_index.html")
 
 # @app.route('/wlfcero', methods=['GET', 'POST'])
 # def wlfcero():
@@ -33,8 +23,7 @@ def login():
 # @app.route('/loadingPage', methods=['GET', 'POST'])
 # def loadingPage():
 #     poly = request.form['demo']
-#     some_data = urllib.parse.quote(convert(poly))
-#     return render_template('loading.html', filename=some_data)
+#     return render_template('loading.html', filename=poly)
 
 @app.route('/wlfcero', methods=['GET', 'POST'])
 def wlfcero():
@@ -64,7 +53,7 @@ def wlfcero():
     # folium.TileLayer('cartodbpositron',opacity=1).add_to(map_draw )
 
     # map_draw.save('templates/map_geo.html')
-    return render_template('map_wlfcero.html')
+    return render_template('02_map_wlfcero.html')
 
 @app.route('/wlfuno', methods=['GET', 'POST'])
 def wlfuno():
@@ -94,7 +83,7 @@ def wlfuno():
     # folium.TileLayer('cartodbpositron',opacity=1).add_to(map_wlfuno )
 
     # map_wlfuno.save('templates/map_wlfuno.html')
-    return render_template("map_wlfuno.html")
+    return render_template("02_map_wlfuno.html")
 
 # @app.route('/wlfsegundo', methods=['GET', 'POST'])
 # def wlfsegundo():
@@ -128,7 +117,7 @@ def wlfsegundo():
     # folium.TileLayer('cartodbpositron',opacity=1).add_to(map_wlfsegundo )
 
     # map_wlfsegundo.save('templates/map_wlfsegundo.html')
-    return render_template("map_wlfsegundo.html")
+    return render_template("02_map_wlfsegundo.html")
 
 # @app.route('/wlfsegundo', methods=['GET', 'POST'])
 # def wlfsegundo():
@@ -165,10 +154,11 @@ def result_wlfcero():
     #     'value_diffuseIlluminance',
     #     'value_irradiation',
     # }
-    filename ='[2.187009,41.403306],[2.186923,41.394711],[2.193446,41.399701],[2.188983,41.403596],[2.187009,41.403306]'
-    # poly = request.form['demo']
+
+    poly = request.form['demo']
+    print(poly)
     # proj_streets, location = test_wlfcero.getEdges(poly)
-    location, a = test_wlfcero.getEdges(filename)
+    location, a = test_wlfcero.getEdges(poly)
 
     # folium_map = proj_streets.explore(
     #     column ='travel_time',
