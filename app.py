@@ -1,3 +1,4 @@
+from asyncio import threads
 from flask import Flask, render_template, request
 # import ghhops_server as hs
 
@@ -7,14 +8,25 @@ import test_wlftwo
 import folium
 from folium import plugins
 
+import urllib.parse
 #
 import random
 from datetime import datetime, timedelta
 
-import asyncio
 
 app = Flask(__name__)
 # hops = hs.Hops(app)
+
+def convert(input):
+    # Converts unicode to string
+    if isinstance(input, dict):
+        return {convert(key): convert(value) for key, value in input.iteritems()}
+    elif isinstance(input, list):
+        return [convert(element) for element in input]
+    elif isinstance(input, str):
+        return input.encode('utf-8')
+    else:
+        return input
 
 @app.route("/", methods=['GET', 'POST'])
 def home():
@@ -28,10 +40,11 @@ def login():
 # def wlfcero():
 #     return render_template("home_index.html")
 
-@app.route('/loadingPage', methods=['GET','POST'])
+@app.route('/loadingPage', methods=['GET', 'POST'])
 def loadingPage():
     poly = request.form['demo']
-    return render_template('loading.html', filename=poly)
+    some_data = urllib.parse.quote(convert(poly))
+    return render_template('loading.html', filename=some_data)
 
 @app.route('/wlfcero', methods=['GET', 'POST'])
 def wlfcero():
@@ -132,8 +145,8 @@ def wlfsegundo():
 #     return render_template("home_index.html")
 
 
-@app.route("/result_wlfcero/<filename>", methods=['GET'])
-async def result_wlfcero(filename):
+@app.route("/result_wlfcero", methods=['GET', 'POST'])
+def result_wlfcero():
     # parameters = {
     #     'name',
     #     "travel_time",
@@ -162,10 +175,10 @@ async def result_wlfcero(filename):
     #     'value_diffuseIlluminance',
     #     'value_irradiation',
     # }
-
+    filename ='[2.187009,41.403306],[2.186923,41.394711],[2.193446,41.399701],[2.188983,41.403596],[2.187009,41.403306]'
     # poly = request.form['demo']
     # proj_streets, location = test_wlfcero.getEdges(poly)
-    location, a = await test_wlfcero.getEdges(filename)
+    location, a = test_wlfcero.getEdges(filename)
 
     # folium_map = proj_streets.explore(
     #     column ='travel_time',
@@ -391,4 +404,4 @@ def result_wfltwo():
 
 
 if __name__== "__main__":
-    app.run(debug=True)
+    app.run(debug=True, threaded=True)
