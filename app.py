@@ -17,16 +17,6 @@ from datetime import datetime, timedelta
 app = Flask(__name__)
 # hops = hs.Hops(app)
 
-def convert(input):
-    # Converts unicode to string
-    if isinstance(input, dict):
-        return {convert(key): convert(value) for key, value in input.iteritems()}
-    elif isinstance(input, list):
-        return [convert(element) for element in input]
-    elif isinstance(input, str):
-        return input.encode('utf-8')
-    else:
-        return input
 
 @app.route("/", methods=['GET', 'POST'])
 def home():
@@ -40,11 +30,11 @@ def login():
 # def wlfcero():
 #     return render_template("home_index.html")
 
-@app.route('/loadingPage', methods=['GET', 'POST'])
-def loadingPage():
-    poly = request.form['demo']
-    some_data = urllib.parse.quote(convert(poly))
-    return render_template('loading.html', filename=some_data)
+# @app.route('/loadingPage', methods=['GET', 'POST'])
+# def loadingPage():
+#     poly = request.form['demo']
+#     some_data = urllib.parse.quote(convert(poly))
+#     return render_template('loading.html', filename=some_data)
 
 @app.route('/wlfcero', methods=['GET', 'POST'])
 def wlfcero():
