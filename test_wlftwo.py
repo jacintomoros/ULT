@@ -29,8 +29,13 @@ import wlftwo_utils_cero as wlf2cero
 
 #@title Play function
 #@markdown Function for HOPS
+# populationThreshold = pt
+#     junctionType = jt
+#     branchingSteps = bs
+#     growthAngle = ga
+#     StreetBlockSize=sbs
 
-def getEdges(poly):
+def getEdges(poly, iter, pt, jt, bs, ga, sbs):
 
     class configuration:
         def __init__(self, segmentLength = None, growthAngle = None, angleResolution = None, waterAngleShift = None, branchingSteps = None, junctionType = None, populationThreshold = None, initialDirection = None, heatmap = [], population = [], boundingBox = None):
@@ -852,11 +857,17 @@ def getEdges(poly):
     # T-Junction Start Left  = 1
     # T-Junction Start Right = 2
 
-    populationThreshold = 0.85
-    junctionType = 1
-    branchingSteps = 2
-    growthAngle = 2
-    StreetBlockSize=100
+    # populationThreshold = 0.85
+    # junctionType = 1
+    # branchingSteps = 2
+    # growthAngle = 2
+    # StreetBlockSize=100
+
+    populationThreshold = pt
+    junctionType = jt
+    branchingSteps = bs
+    growthAngle = ga
+    StreetBlockSize=sbs
 
     ###
     segmentLength=StreetBlockSize/branchingSteps
@@ -1727,7 +1738,8 @@ def getEdges(poly):
     gdf_dataframe_for_first_growt.set_crs(4326, inplace=True)
     gdf_dataframe_for_first_growt = gdf_dataframe_for_first_growt.to_crs(3857)
     
-    numberiterations = 2000
+    # numberiterations = 2000
+    numberiterations = iter
 
     dataframe_for_center_point = pd.DataFrame()
     gdf_dataframe_for_center_point= gpd.GeoDataFrame(dataframe_for_center_point, geometry=[list_pois[0]])

@@ -75,6 +75,16 @@
                     opacity:0;
                 }
 
+                .bro {
+                    position: absolute;
+                    font-family:'Bebas Neue' ;
+                    font-size: 30px;
+                    top: 60%;
+                    left: 450px;
+                    transform: translate(-50%, -50%);
+                    z-index: 999;
+                }
+
                 #credits{
                     position: absolute;
                     z-index: 999;
@@ -116,10 +126,40 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.fullscreen/1.4.2/Control.FullScreen.min.css"/>
 </head>
 <body>
-    <form action = "/result_wlfcero" method="POST">
+    <form action = "/trans_wlfcero" method="POST">
         <!-- <button id="myButton" name="button" onclick="sendDataToBacked()">Send</button> -->
         <input type="text" id="demo" name="demo">
         <input type="image" id="enter" src="{{url_for('static', filename='images/enter.png')}}">
+        <div class="bro">
+            <label for="browser"> & Choose display map:</label>
+            <input list="browsers" name="browser" id="browser">
+            <datalist id="browsers">
+                <option value="speed_kph">
+                <option value="length">
+                <option value="widths">
+                <option value="width_deviations">
+                <option value="openness">
+                <option value="closeness400">
+                <option value="closeness_global">
+                <option value="betweenness_metric_n">
+                <option value="straightness">
+                <option value="food">
+                <option value="education">
+                <option value="transport">
+                <option value="shop">
+                <option value="vegetation">
+                <option value="value_temperature">
+                <option value="value_windSpeed">
+                <option value="value_windDirection">
+                <option value="value_humidity">
+                <option value="value_skyCover">
+                <option value="value_earthTemperature">
+                <option value="value_precipitationWater">
+                <option value="value_directIlluminance">
+                <option value="value_diffuseIlluminance">
+                <option value="value_irradiation">
+            </datalist>
+        </div>
         
         <!-- <div class="gif">
             <div class="image">

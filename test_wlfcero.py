@@ -11,11 +11,14 @@ from datetime import datetime, timedelta
 
 import wlfcero_wlfuno_utils as wlfc
 
+import numpy as np
+
 
 
 #@title Play function
 #@markdown Function for HOPS
-def getEdges(poly):
+
+def getEdges(poly, iter, va1, va2, va3, va4, va5, va6):
 
     final_b = poly.replace("[", "")
     final_b = final_b.replace("]", "")
@@ -546,10 +549,10 @@ def getEdges(poly):
     # weight_mults = mult # Weight values list. Lo de los + y los -.
 
     lst_vals = (remap_speed,remap_vegetation)
-    weight_vals = [5,3]
+    weight_vals = [va1,va2]
 
     lst_mults=(climate_multipliers_total,remap_openness,remap_closeness_global,remap_betweenness_av)
-    weight_mults=[4,1,2,1]
+    weight_mults=[va3,va4,va5,va6]
 
     # General max and ratio values
     T_w_vals = sum(weight_vals)
@@ -616,7 +619,7 @@ def getEdges(poly):
     vals_xtd_multiple = [sum(x) / len(x) for x in vals_xtd_tr]
     vals_xtd_multiple = [vals_xtd_multiple]
 
-    iterations = 50
+    iterations = iter #50
 
     # CODE FOR THE FINAL ITERATION STUFF - AKA "LA BUENA WEA"
     for i in range(iterations): # Iteration number could be fixed
@@ -640,6 +643,14 @@ def getEdges(poly):
         food_xtd_prcnt=0.1
         food_min_speedval=0.5
         food_av_max=0.9
+        # speed_max = va1
+        # speed_min=va2
+        # speed_add1=va3
+        # speed_add2=va4
+        # food_xtd_max=va5
+        # food_xtd_prcnt=va6
+        # food_min_speedval=va7
+        # food_av_max=va8
 
         speed_new = wlfc.rule_inbetween_xtd_multiple(speedval[i], vals_xtd_multiple[i], speed_av, speed_max, speed_min, speed_add1, speed_add2, food_xtd_max, food_xtd_prcnt)
         food_new = wlfc.rule_food_2(foodval[i], speedval[i], food_av, food_min_speedval, speed_add1, speed_add2, food_av_max)
@@ -662,32 +673,94 @@ def getEdges(poly):
     # print("Rows : " + str(arow))
     # print("Columns : " + str(acol))
 
+    date_i=[]
+    date_j=[]
+    traffic_values = []
     per_colors=[]
     for i in range(len(speedval)):
         for j in range(len(speedval[0])):
-            if speedval[i][j] >= 0 and speedval[i][j] <= 0.25:
-                z = 'red'
+            if speedval[i][j] >= 0 and speedval[i][j] <= 0.1:
+                z = "#ffffcc"
                 per_colors.append(z)
-
-            if speedval[i][j] > 0.25 and speedval[i][j] <= 0.5:
-                z = 'brown'
+                traffic_values.append(speedval[i][j])
+                date_i.append(i)
+                date_j.append(j)
+            
+            if speedval[i][j] > 0.1 and speedval[i][j] <= 0.2:
+                z = "#ffefa5"
                 per_colors.append(z)
+                traffic_values.append(speedval[i][j])
+                date_i.append(i)
+                date_j.append(j)
 
-            if speedval[i][j] > 0.5 and speedval[i][j] <=0.75:
-                z = 'yellow'
+            if speedval[i][j] > 0.2 and speedval[i][j] <= 0.3:
+                z = "#fedd7f"
                 per_colors.append(z)
+                traffic_values.append(speedval[i][j])
+                date_i.append(i)
+                date_j.append(j)
 
-            if speedval[i][j] > 0.75 and speedval[i][j] <=1:
-                z = 'green'
+            if speedval[i][j] > 0.3 and speedval[i][j] <=0.4:
+                z = "#febf5a"
                 per_colors.append(z)
+                traffic_values.append(speedval[i][j])
+                date_i.append(i)
+                date_j.append(j)
 
+            if speedval[i][j] > 0.4 and speedval[i][j] <=0.5:
+                z = "#fd9d43"
+                per_colors.append(z)
+                traffic_values.append(speedval[i][j])
+                date_i.append(i)
+                date_j.append(j)
+            
+            if speedval[i][j] > 0.5 and speedval[i][j] <=0.6:
+                z = "#fd7134"
+                per_colors.append(z)
+                traffic_values.append(speedval[i][j])
+                date_i.append(i)
+                date_j.append(j)
+            
+            if speedval[i][j] > 0.6 and speedval[i][j] <=0.7:
+                z = "#f43d25"
+                per_colors.append(z)
+                traffic_values.append(speedval[i][j])
+                date_i.append(i)
+                date_j.append(j)
+            
+            if speedval[i][j] > 0.7 and speedval[i][j] <=0.8:
+                z = "#db141e"
+                per_colors.append(z)
+                traffic_values.append(speedval[i][j])
+                date_i.append(i)
+                date_j.append(j)
+            
+            if speedval[i][j] > 0.8 and speedval[i][j] <=0.9:
+                z = "#b60026"
+                per_colors.append(z)
+                traffic_values.append(speedval[i][j])
+                date_i.append(i)
+                date_j.append(j)
+            
+            if speedval[i][j] > 0.9 and speedval[i][j] <=1:
+                z = "#800026"
+                per_colors.append(z)
+                traffic_values.append(speedval[i][j])
+                date_i.append(i)
+                date_j.append(j)
+    
+
+    data={'Time':date_i,'Streets':date_j,'Speed':traffic_values}
+
+    df=pd.DataFrame(data)
+    
     n = len(speedval[0])
     abs = x = [per_colors[i:i + n] for i in range(0, len(per_colors), n)]
-
+    abs_speed = [traffic_values[i:i + n] for i in range(0, len(traffic_values), n)]
     arow2 = len(abs)
     acol2 = len(abs[0])
-    # print("Rows : " + str(arow))
-    # print("Columns : " + str(acol))
+    # print("Rows : " + str(arow2))
+    # print("Columns : " + str(acol2))
 
     multi_linefinal = removed_dupl_lines_good.geometry.values
     a = []
@@ -708,16 +781,24 @@ def getEdges(poly):
             result = dt + timedelta(seconds=w)
             result = str(result).replace(" ", "T")
             # print(b)
+
+            table = f'<table style=\'width:100%\'><tr><th>KEY</th><th> INITIAL </th><th> FINAL</th><th> UNIT</th></tr>'
+            table_traffic =f'<tr><td>Traffic: </td><td>{str(round(np.multiply((speedval[0][ia]),50),2))}</td><td>{str(round(np.multiply((abs_speed[w][ia]),50),2))}</td><td>{"km/h"}</td></tr>'
+            table_noise =f'<tr><td>Noise: </td><td>{str(round(np.multiply((speedval[0][ia]),75),2))}</td><td>{str(round(np.multiply((abs_speed[w][ia]),75),2))}</td><td>dB</td></tr></table>'
+
+            table_final = f'{table}{table_traffic}{table_noise}'
+
             c = {
                 "coordinates": b,
                 "dates": [result, result],
                 "color": abs[w][ia],
-                # "popup": "address1",
-                # "weight": k[ia],
+                "weight": round(np.multiply((abs_speed[w][ia]),30),0),
+                "popup": table_final,
+                
             }
             a.append(c)
 
         ###iterations
 
 
-    return point_central, a
+    return point_central, a, df
